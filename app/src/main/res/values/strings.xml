@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">BatuSrs</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_schedule">Schedule</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_lecture_name">Add Lecture</string>
+    <string name="add_lecture_num">Lecture Number:</string>
+    <string name="add_lecture_button">Add Lecture!</string>
+    <string name="action_info">Info</string>
+    <string name="action_progress">Progress</string>
+    <string name="info_introduction">Hello This is BatuSrs</string>
+    <string name="info_schedule">This is Schedule</string>
+    <string name="info_level">Yes, you have levels</string>
+    <string name="info_title">BatuSrs</string>
+    <string name="info_introduction_header">What is BatuSrs?</string>
+    <string name="info_schedule_header">Schedule</string>
+    <string name="info_level_header">Level</string>
+    <string name="settings_stopMode">Active Stop Mode</string>
+</resources>

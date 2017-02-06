@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="ebk.batusrs.AddLectureFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/add_lecture_name"
+        android:id="@+id/addLectureTextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:id="@+id/lectures_spinner"
+        android:layout_below="@+id/addLectureTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+<!--
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="16dp"
+        android:id="@+id/nameEditText" />-->
+
+    <View style="@style/Divider"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/lectures_spinner"
+        android:id="@+id/divider1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/add_lecture_num"
+        android:id="@+id/lectureNumTextView"
+        android:layout_below="@+id/lectures_spinner"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/lectureNumTextView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/lectureNumEditText" />
+
+    <!--
+    <View style="@style/Divider"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/lectureNumEditText"
+        android:id="@+id/divider2" />-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_lecture_button"
+        android:id="@+id/addLectureButton"
+        android:layout_below="@+id/lectureNumEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        style="@style/MyButton"/>
+
+</RelativeLayout>

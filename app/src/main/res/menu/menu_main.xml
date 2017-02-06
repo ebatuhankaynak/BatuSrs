@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ebk.batusrs.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_home_white_24dp"
+        android:orderInCategory="1"
+        android:title="@string/action_schedule"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_schedule"
+        android:icon="@drawable/ic_assignment_white_24dp"
+        android:orderInCategory="2"
+        android:title="@string/action_schedule"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_progress"
+        android:icon="@drawable/ic_assessment_white_24dp"
+        android:orderInCategory="3"
+        android:title="@string/action_progress"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_info"
+        android:icon="@drawable/ic_help_white_24dp"
+        android:orderInCategory="4"
+        android:title="@string/action_info"
+        app:showAsAction="always" />
+</menu>
