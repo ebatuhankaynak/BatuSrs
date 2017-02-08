@@ -42,7 +42,7 @@
         <service android:name=".alarm.SrsMidnightAlarmService" />
 
         <activity
-            android:name=".IntroActivity"
+            android:name=".intro.IntroActivity"
             android:label="@string/title_activity_intro" />
     </application>
 

@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import java.util.function.ToDoubleBiFunction;
+
 import ebk.batusrs.adapters.TextAdapter;
 import ebk.batusrs.database.BatuSrsDatabaseHelper;
 
@@ -48,6 +50,12 @@ public class ScheduleFragment extends Fragment {
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
         final TextAdapter textAdapter = new TextAdapter(getContext());
         gridview.setAdapter(textAdapter);
+        
+        // TODO: 8.2.2017 LET USER ENTER ALL HIS/HER ACTIVITIES, THEN PLACE THEM INTO THE SCHEDULE.
+        // TODO: 8.2.2017 1)WHERE TO PLACE INPUT BOXES?(ADD A FAB MAYBE?)
+        // TODO: 8.2.2017 2)MAKE TIMESLOTS CUSTOMIZEABLE BY CLICKING?
+        // TODO: 8.2.2017 3)ADD THE OPTION TO ADD ROWS?
+
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
@@ -108,11 +116,6 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void refreshFragment(){
-        Fragment fragment = new ScheduleFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+        Transition.getInstance().switchFragment(getFragmentManager(), new ScheduleFragment());
     }
 }

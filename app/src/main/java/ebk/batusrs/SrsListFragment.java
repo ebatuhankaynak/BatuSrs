@@ -14,6 +14,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import ebk.batusrs.adapters.SrsListAdapter;
@@ -23,12 +24,14 @@ import ebk.batusrs.database.BatuSrsDatabaseHelper;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SrsListFragment extends ListFragment {
+public class SrsListFragment extends Fragment {
 
     private SQLiteDatabase db;
-    private Cursor cursor;
+    private Cursor todayCursor;
+    private Cursor upcomingCursor;
 
-    private SrsListAdapter listAdapter;
+    private SrsListAdapter todayListAdapter;
+    private SrsListAdapter upcomingListAdapter;
 
     public SrsListFragment() {
         // Required empty public constructor
@@ -40,12 +43,21 @@ public class SrsListFragment extends ListFragment {
         SQLiteOpenHelper srsDatabaseHelper = new BatuSrsDatabaseHelper(getContext());
         db = srsDatabaseHelper.getReadableDatabase();
 
-        cursor = db.query("LECTURE", new String[]{"_id", "NAME", "LEC_NUM", "SRS", "LEVEL"}, null, null,
-                null, null, "SRS ASC");
+        todayCursor = db.query("LECTURE", new String[]{"_id", "NAME", "LEC_NUM", "SRS", "LEVEL"}, "SRS=?",
+                new String[]{"0"}, null, null, "SRS ASC");
 
-        listAdapter = new SrsListAdapter(inflater.getContext(),
+        upcomingCursor = db.query("LECTURE", new String[]{"_id", "NAME", "LEC_NUM", "SRS", "LEVEL"}, "SRS!=?",
+                new String[]{"0"}, null, null, "SRS ASC");
+
+        todayListAdapter = new SrsListAdapter(inflater.getContext(),
                 R.layout.srs_list,
-                cursor,
+                todayCursor,
+                new String[]{"NAME", "LEC_NUM", "SRS", "LEVEL"},
+                new int[]{R.id.listNameTextView, R.id.listLectureNumTextView, R.id.listSrsTextView},
+                0);
+        upcomingListAdapter = new SrsListAdapter(inflater.getContext(),
+                R.layout.srs_list,
+                upcomingCursor,
                 new String[]{"NAME", "LEC_NUM", "SRS", "LEVEL"},
                 new int[]{R.id.listNameTextView, R.id.listLectureNumTextView, R.id.listSrsTextView},
                 0);
@@ -55,47 +67,64 @@ public class SrsListFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setListAdapter(listAdapter);
-    }
 
-    @Override
-    public void onListItemClick(ListView listView, View view, int position, long id){
-        super.onListItemClick(listView, view, position, id);
+        ListView todayList = (ListView) view.findViewById(R.id.todayList);
+        ListView upcomingList = (ListView) view.findViewById(R.id.upcomingList);
 
-        cursor = db.query("LECTURE", new String[] {"SRS", "LEVEL", "_id"}, "_id = ?", new String[] {Integer.toString((int) id)},
-                null, null, null);
+        // TODO: 8.2.2017 ACCESS DB WHEN USER SAYS "YES" ???
+        // TODO: 8.2.2017 CHANGE QUERY TO BETTER SUIT NEW DESIGN 
+        todayList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                long id = l;
+                todayCursor = db.query("LECTURE", new String[] {"SRS", "LEVEL", "_id"}, "_id = ?", new String[] {Integer.toString((int) id)},
+                        null, null, null);
 
-        if (cursor.moveToFirst()){
-            if (cursor.getInt(0) == 0){
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Completed?");
-                final int dbId = (int) id;
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        int newLevel = cursor.getInt(1) + 1;
-                        int newSrs = getNewSrs(newLevel);
+                if (todayCursor.moveToFirst()){
+                    if (todayCursor.getInt(0) == 0){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Completed?");
+                        final int dbId = (int) id;
+                        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                int newLevel = todayCursor.getInt(1) + 1;
+                                int newSrs = getNewSrs(newLevel);
 
-                        ContentValues updatedValues = new ContentValues();
-                        updatedValues.put("LEVEL", newLevel);
-                        updatedValues.put("SRS", newSrs);
+                                ContentValues updatedValues = new ContentValues();
+                                updatedValues.put("LEVEL", newLevel);
+                                updatedValues.put("SRS", newSrs);
 
-                        db.update("LECTURE", updatedValues, "_id = ?", new String[] {Integer.toString((dbId))});
+                                db.update("LECTURE", updatedValues, "_id = ?", new String[] {Integer.toString((dbId))});
 
-                        refreshFragment();
+                                refreshFragment();
+                            }
+                        });
+                        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                return;
+                            }
+                        });
+                        builder.show();
                     }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        return;
-                    }
-                });
-                builder.show();
+                }
             }
-        }
-    }
+        });
 
+        upcomingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+
+        todayList.setAdapter(todayListAdapter);
+        upcomingList.setAdapter(upcomingListAdapter);
+
+        //setListAdapter(listAdapter);
+    }
+    
     private int getNewSrs(int newLevel) {
         int newSrs;
         switch (newLevel){

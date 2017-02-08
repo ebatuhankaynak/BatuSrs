@@ -4,8 +4,33 @@
     android:layout_height="match_parent"
     tools:context="ebk.batusrs.SrsListFragment">
 
+    <TextView
+        android:id="@+id/todayTextView"
+        android:text="@string/today"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/todayList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/todayTextView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/upcomingTextView"
+        android:layout_below="@id/todayList"
+        android:text="@string/upcoming"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ListView
+        android:layout_below="@id/upcomingTextView"
+        android:id="@+id/upcomingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />

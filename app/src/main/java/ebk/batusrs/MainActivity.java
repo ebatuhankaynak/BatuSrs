@@ -8,21 +8,21 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import ebk.batusrs.alarm.SrsMidnightAlarmReceiver;
 import ebk.batusrs.database.AndroidDatabaseManager;
 import ebk.batusrs.database.BatuSrsDatabaseHelper;
+import ebk.batusrs.intro.IntroActivity;
 
 public class MainActivity extends AppCompatActivity {
     //9 + 6
@@ -52,6 +52,37 @@ public class MainActivity extends AppCompatActivity {
         SQLiteOpenHelper srsDatabaseHelper = new BatuSrsDatabaseHelper(this);
         db = srsDatabaseHelper.getWritableDatabase();
 
+        //  Declare a new thread to do a preference check
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (true) {
+                    //  Launch app intro
+                    Intent i = new Intent(MainActivity.this, IntroActivity.class);
+                    startActivity(i);
+
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
+
+                    //  Apply changes
+                    e.apply();
+                }
+            }
+        });
+
+        // Start the thread
+        t.start();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,12 +105,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (foundLecture){
+                    Transition.getInstance().switchFragment(getSupportFragmentManager(), new AddLectureFragment());
+                    /*
                     Fragment fragment = new AddLectureFragment();
                     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.content_frame, fragment);
                     ft.addToBackStack(null);
                     ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    ft.commit();
+                    ft.commit();*/
                 }else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle("You seem to have an empty schedule, please update your schedule to continue");
@@ -97,12 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         srsMidnightAlarmReceiver.setAlarm(this);
 
-        Fragment fragment = new SrsListFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+        Transition.getInstance().switchFragment(getSupportFragmentManager(), new SrsListFragment());
 
         //db.delete("LECTURE", null, null);
         //db.delete("SCHEDULE", null, null);
@@ -120,43 +148,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Fragment fragment = new SrsListFragment();
 
         if (id == R.id.action_home){
-            Fragment fragment = new SrsListFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
+            fragment = new SrsListFragment();
         }else if (id == R.id.action_schedule) {
-            Fragment fragment = new ScheduleFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
+            fragment = new ScheduleFragment();
         }else if (id == R.id.action_progress){
-            Fragment fragment = new ProgressFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
+            fragment = new ProgressFragment();
         }else if (id == R.id.action_info){
-            Fragment fragment = new InfoFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
+            fragment = new InfoFragment();
         }else if (id == R.id.action_settings){
-            Fragment fragment = new SettingsFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
+            fragment = new SettingsFragment();
         }
+        Transition.getInstance().switchFragment(getSupportFragmentManager(), fragment);
+
         return super.onOptionsItemSelected(item);
     }
 

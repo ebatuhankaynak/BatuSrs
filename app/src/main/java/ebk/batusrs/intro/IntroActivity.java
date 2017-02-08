@@ -1,4 +1,4 @@
-package ebk.batusrs;
+package ebk.batusrs.intro;
 
 import android.graphics.Color;
 import android.support.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
+
+import ebk.batusrs.R;
 
 public class IntroActivity extends AppIntro {
     @Override
@@ -58,6 +60,7 @@ public class IntroActivity extends AppIntro {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
+        finish();
         // Do something when users tap on Done button.
     }
 

@@ -120,6 +120,8 @@ public class AddLectureFragment extends Fragment {
 
         if (lastCursor.moveToFirst()){
             lastLectureNum = String.valueOf(Integer.parseInt(lastCursor.getString(0)) + 1);
+        }else {
+            lastLectureNum = "1";
         }
 
         return lastLectureNum;
@@ -135,8 +137,6 @@ public class AddLectureFragment extends Fragment {
         Cursor checkCursor = db.query("LECTURE", new String[] {"LEC_NUM", "_id"}, "NAME=? AND LEC_NUM=?",
                 new String[]{lectureName, lectureNum}, null, null, "LEC_NUM DESC");
 
-
-
         if (checkCursor.moveToFirst()){
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("This Lecture Already Exists!");
@@ -149,13 +149,7 @@ public class AddLectureFragment extends Fragment {
             builder.show();
         }else{
             insertLecture(lectureName, lectureNum);
-
-            Fragment fragment = new SrsListFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
+            Transition.getInstance().switchFragment(getFragmentManager(), new SrsListFragment());
         }
     }
 
