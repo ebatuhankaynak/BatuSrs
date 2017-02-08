@@ -17,4 +17,7 @@
     <string name="info_schedule_header">Schedule</string>
     <string name="info_level_header">Level</string>
     <string name="settings_stopMode">Active Stop Mode</string>
+    <string name="title_activity_intro">IntroActivity</string>
+    <string name="today">Today</string>
+    <string name="upcoming">Upcoming</string>
 </resources>

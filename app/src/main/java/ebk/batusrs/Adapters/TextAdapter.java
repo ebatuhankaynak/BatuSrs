@@ -1,4 +1,4 @@
-package ebk.batusrs.Adapters;
+package ebk.batusrs.adapters;
 
 import android.content.Context;
 import android.database.Cursor;

@@ -2,6 +2,7 @@ package ebk.batusrs;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import android.widget.RelativeLayout;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProgressFragment extends Fragment {
+public class ProgressFragment extends ListFragment {
 
     public ProgressFragment() {
         // Required empty public constructor
@@ -23,12 +24,12 @@ public class ProgressFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_progress, container, false);
-
+        /*
         LinearLayout root = (LinearLayout)view.findViewById(R.id.progressLayout);
 
         View element = inflater.inflate(R.layout.circular_progress_bar, container, false);
 
-        root.addView(element);
+        root.addView(element);*/
 
         return view;
     }

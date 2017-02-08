@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -30,9 +31,10 @@ public class SrsMidnightAlarmReceiver extends WakefulBroadcastReceiver {
         calendar.clear();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.add(Calendar.DATE, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
+        // TODO: 7.2.2017 LET THE USER SET THE ALARM "I USUALLY STUDY UNTIL...." 
 
         Log.i("hiyo", calendar.getTime().toLocaleString());
         Log.i("hiyo", String.valueOf(calendar.getTimeInMillis()));
@@ -53,7 +55,7 @@ public class SrsMidnightAlarmReceiver extends WakefulBroadcastReceiver {
             alarmManager.cancel(alarmIntent);
         }
 
-        // Disable {@code SampleBootReceiver} so that it doesn't automatically restart the
+        // Disable {@code SrsBootReceiver} so that it doesn't automatically restart the
         // alarm when the device is rebooted.
         ComponentName receiver = new ComponentName(context, SrsBootReceiver.class);
         PackageManager pm = context.getPackageManager();
@@ -64,7 +66,7 @@ public class SrsMidnightAlarmReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Toast.makeText(context, "Recieved Alarm", Toast.LENGTH_SHORT).show ();
+        Toast.makeText(context, "Recieved Alarm", Toast.LENGTH_SHORT).show ();
         Log.i("hiyo", "Recieved Alarm");
         Log.i("hiyo", Boolean.toString(MainActivity.stopMode));
         if (!MainActivity.stopMode){

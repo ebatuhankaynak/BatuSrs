@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import ebk.batusrs.Adapters.TextAdapter;
+import ebk.batusrs.adapters.TextAdapter;
 import ebk.batusrs.database.BatuSrsDatabaseHelper;
 
 

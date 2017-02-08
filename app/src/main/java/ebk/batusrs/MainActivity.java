@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         //Using getXXX- with XX is type date you wrote to file "name_file"
         stopMode = shared.getBoolean("stopMode", false);
 
-        Log.i("hiyo", Boolean.toString(stopMode));
+        //Log.i("hiyo", Boolean.toString(stopMode));
 
         SQLiteOpenHelper srsDatabaseHelper = new BatuSrsDatabaseHelper(this);
         db = srsDatabaseHelper.getWritableDatabase();
