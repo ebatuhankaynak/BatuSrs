@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class BatuSrsDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "Srs"; // the name of our database
-    private static final int DB_VERSION = 1; // the version of the database
+    private static final int DB_VERSION = 2; // the version of the database
 
     public static final String TABLE_NAME = "ACTIVITY";
     public static final String ID = "_id";
@@ -27,6 +27,7 @@ public class BatuSrsDatabaseHelper extends SQLiteOpenHelper {
     public static final String DURATION = "DURATION";
     public static final String ONGOING = "ONGOING";
     public static final String DATE = "DATE";
+    // TODO: 10.2.2017 SET CONSTANT STRINGS 
 
     public BatuSrsDatabaseHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
@@ -49,8 +50,9 @@ public class BatuSrsDatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE LECTURE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "NAME TEXT, "
                     + "LEC_NUM TEXT, "
-                    + "LEVEL INTEGER, " //+ "LAST_LEC_NUM TEXT, "
-                    + "SRS INTEGER);"); //"DATE TEXT);");
+                    + "LEVEL INTEGER, "
+                    + "SRS INTEGER, "
+                    + "NOTE TEXT);");
             db.execSQL("CREATE TABLE SCHEDULE (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "MON TEXT, "
                     + "TUE TEXT, "
@@ -62,7 +64,8 @@ public class BatuSrsDatabaseHelper extends SQLiteOpenHelper {
             }
         }
         if (oldVersion < 2) {
-
+            db.execSQL("CREATE TABLE LECTURELIST (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "LECTURE TEXT);");
         }
     }
 

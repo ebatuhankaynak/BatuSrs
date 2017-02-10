@@ -38,6 +38,7 @@ public class AddLectureFragment extends Fragment {
 
     private Spinner sItems;
     private EditText lectureNumEditText;
+    private EditText lectureNotesEditText;
 
     public AddLectureFragment() {
         // Required empty public constructor
@@ -123,13 +124,15 @@ public class AddLectureFragment extends Fragment {
         }else {
             lastLectureNum = "1";
         }
-
         return lastLectureNum;
     }
 
     public void onAddLectureClick() {
         String selected = sItems.getSelectedItem().toString();
         final String lectureName = selected;
+
+        lectureNotesEditText = (EditText) view.findViewById(R.id.lectureNotesEditText);
+        String lectureNote = lectureNotesEditText.getText().toString();
 
         lectureNumEditText = (EditText) view.findViewById(R.id.lectureNumEditText);
         String lectureNum = lectureNumEditText.getText().toString();
@@ -148,19 +151,18 @@ public class AddLectureFragment extends Fragment {
             });
             builder.show();
         }else{
-            insertLecture(lectureName, lectureNum);
+            insertLecture(lectureName, lectureNum, lectureNote);
             Transition.getInstance().switchFragment(getFragmentManager(), new SrsListFragment());
         }
     }
 
-    private void insertLecture(String lectureName, String lectureNum){
+    private void insertLecture(String lectureName, String lectureNum, String lectureNote){
         ContentValues lectureValues = new ContentValues();
         lectureValues.put("NAME", lectureName);
         lectureValues.put("LEC_NUM", lectureNum);
-
         lectureValues.put("LEVEL", 0);
-
         lectureValues.put("SRS", 0);
+        lectureValues.put("NOTE", lectureNote);
 
         db.insert("LECTURE", null, lectureValues);
     }

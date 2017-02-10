@@ -60,11 +60,10 @@ public class SrsMidnightAlarmService extends IntentService {
     private int getNewSrs(int newLevel) {
         int newSrs;
         switch (newLevel){
-            case 1: newSrs = 2; break;
-            case 2: newSrs = 3; break;
-            case 3: newSrs = 7; break;
-            case 4: newSrs = 14; break;
-            case 5: newSrs = 28; break;
+            case 1: newSrs = 3; break;
+            case 2: newSrs = 5; break;
+            case 3: newSrs = 12; break;
+            case 4: newSrs = 24; break;
             default: newSrs = 0;
         }
         return newSrs;

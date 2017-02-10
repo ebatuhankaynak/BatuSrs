@@ -20,4 +20,9 @@
     <string name="title_activity_intro">IntroActivity</string>
     <string name="today">Today</string>
     <string name="upcoming">Upcoming</string>
+    <string name="manage_activities">Manage Activities</string>
+    <string name="manage_lectures">Manage Lectures</string>
+    <string name="lectures">Lectures</string>
+    <string name="settings_alarm">I usually study until </string>
+    <string name="add_lecture_notes">Lecture Notes:</string>
 </resources>

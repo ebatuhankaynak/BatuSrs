@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
 
                 //  If the activity has never started before...
-                if (true) {
+                if (false) {
                     //  Launch app intro
                     Intent i = new Intent(MainActivity.this, IntroActivity.class);
                     startActivity(i);
@@ -134,9 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
         //db.delete("LECTURE", null, null);
         //db.delete("SCHEDULE", null, null);
-        //db.execSQL("DROP TABLE IF EXISTS LECTURE");
-        //db.execSQL("DROP TABLE IF EXISTS SCHEDULE");
-        //db.setVersion(0);
+        /*
+        db.execSQL("DROP TABLE IF EXISTS LECTURE");
+        db.execSQL("DROP TABLE IF EXISTS SCHEDULE");
+        db.execSQL("DROP TABLE IF EXISTS LECTURELIST");
+        db.setVersion(0);*/
     }
 
     @Override

@@ -54,18 +54,36 @@
         android:layout_alignParentStart="true"
         android:id="@+id/lectureNumEditText" />
 
-    <!--
     <View style="@style/Divider"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/lectureNumEditText"
-        android:id="@+id/divider2" />-->
+        android:id="@+id/divider2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/add_lecture_notes"
+        android:id="@+id/lectureNotesTextView"
+        android:layout_below="@+id/divider2"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/lectureNotesTextView"
+        android:layout_alignParentStart="true"
+        android:id="@+id/lectureNotesEditText" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_lecture_button"
         android:id="@+id/addLectureButton"
-        android:layout_below="@+id/lectureNumEditText"
+        android:layout_below="@+id/lectureNotesEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
         style="@style/MyButton"/>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import ebk.batusrs.adapters.SrsListAdapter;
 import ebk.batusrs.database.BatuSrsDatabaseHelper;
@@ -43,10 +44,10 @@ public class SrsListFragment extends Fragment {
         SQLiteOpenHelper srsDatabaseHelper = new BatuSrsDatabaseHelper(getContext());
         db = srsDatabaseHelper.getReadableDatabase();
 
-        todayCursor = db.query("LECTURE", new String[]{"_id", "NAME", "LEC_NUM", "SRS", "LEVEL"}, "SRS=?",
+        todayCursor = db.query("LECTURE", new String[]{"_id", "NAME", "LEC_NUM", "SRS", "LEVEL", "NOTE"}, "SRS=?",
                 new String[]{"0"}, null, null, "SRS ASC");
 
-        upcomingCursor = db.query("LECTURE", new String[]{"_id", "NAME", "LEC_NUM", "SRS", "LEVEL"}, "SRS!=?",
+        upcomingCursor = db.query("LECTURE", new String[]{"_id", "NAME", "LEC_NUM", "SRS", "LEVEL", "NOTE"}, "SRS!=?",
                 new String[]{"0"}, null, null, "SRS ASC");
 
         todayListAdapter = new SrsListAdapter(inflater.getContext(),
@@ -69,7 +70,7 @@ public class SrsListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ListView todayList = (ListView) view.findViewById(R.id.todayList);
-        ListView upcomingList = (ListView) view.findViewById(R.id.upcomingList);
+        final ListView upcomingList = (ListView) view.findViewById(R.id.upcomingList);
 
         // TODO: 8.2.2017 ACCESS DB WHEN USER SAYS "YES" ???
         // TODO: 8.2.2017 CHANGE QUERY TO BETTER SUIT NEW DESIGN 
@@ -115,7 +116,19 @@ public class SrsListFragment extends Fragment {
         upcomingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor c = (Cursor) upcomingListAdapter.getItem(i);
+                String note = c.getString(5);
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Notes " + c.getString(1) + " Lecture " + c.getString(2));
+
+                View v = LayoutInflater.from(getContext()).inflate(R.layout.notes_dialog,null);
+
+                TextView notesDialogTextView = (TextView) v.findViewById(R.id.notesDialogTextView);
+                notesDialogTextView.setText(note);
+
+                builder.setView(v);
+                builder.show();
             }
         });
 
@@ -128,12 +141,19 @@ public class SrsListFragment extends Fragment {
     private int getNewSrs(int newLevel) {
         int newSrs;
         switch (newLevel){
+            case 1: newSrs = 3; break;
+            case 2: newSrs = 5; break;
+            case 3: newSrs = 12; break;
+            case 4: newSrs = 24; break;
+            default: newSrs = 0;
+            /*
             case 1: newSrs = 2; break;
             case 2: newSrs = 3; break;
             case 3: newSrs = 7; break;
             case 4: newSrs = 14; break;
             case 5: newSrs = 28; break;
             default: newSrs = 0;
+            */
         }
         return newSrs;
     }
